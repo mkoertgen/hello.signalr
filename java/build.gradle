@@ -1,3 +1,7 @@
+plugins {
+  id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+
 group = 'de.mkoertgen.samples'
 version = '0.0.1-SNAPSHOT'
 
@@ -25,4 +29,8 @@ jar {
     manifest {
         attributes 'Main-Class': 'de.mkoertgen.samples.signalr.Program'
     }
+}
+
+shadowJar {
+  configurations = [project.configurations.compile]
 }
