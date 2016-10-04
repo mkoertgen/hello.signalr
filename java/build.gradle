@@ -1,0 +1,28 @@
+group = 'de.mkoertgen.samples'
+version = '0.0.1-SNAPSHOT'
+
+apply plugin: 'java'
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+  jcenter()
+  // for signalr
+  maven { url "http://dl.bintray.com/takenet/maven" }    
+}
+
+dependencies {
+  compile 'org.slf4j:slf4j-api:1.7.21'
+  testCompile 'junit:junit:4.12'
+
+  // signalr
+  compile 'net.take:signalr-client-sdk:1.0'
+  compile 'com.google.code.gson:gson:2.3'
+  compile group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.3.0'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'de.mkoertgen.samples.signalr.Program'
+    }
+}
