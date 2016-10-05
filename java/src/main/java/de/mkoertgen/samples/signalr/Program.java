@@ -25,8 +25,13 @@ public class Program {
       }
     };
 
+    String url = "http://localhost:8080";
+    if (args.length > 0) {
+      url = args[0];
+    }
+
     // Connect to the server
-    HubConnection conn = new HubConnection("http://signalr-test-server.azurewebsites.net/", "", true, logger);
+    HubConnection conn = new HubConnection(url, "", true, logger);
     
     // Create the hub proxy
     HubProxy proxy = conn.createHubProxy("ChatHub");

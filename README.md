@@ -8,7 +8,7 @@ Run & build the .NET server
 
     cd net
     build.bat
-    ...
+    hello.signalr\bin\Release\hello.signalr.exe
 
 Run & build the java client
 
