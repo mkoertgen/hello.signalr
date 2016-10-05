@@ -16,12 +16,10 @@ public class Program {
 
   public static void main(String[] args) {
     
-    // Create a new console logger
     Logger logger = new Logger() {
-
       @Override
       public void log(String message, LogLevel level) {
-        System.out.println(message);
+        //System.out.println(message);
       }
     };
 
@@ -38,23 +36,20 @@ public class Program {
 
     proxy.subscribe(new Object() {
       @SuppressWarnings("unused")
-      public void messageReceived(String name, String message) {
-        System.out.println(name + ": " + message);
+      public void broadcastMessage(String name, String message) {
+        System.out.format("[%s]: '%s'\n", name, message);
       }
     });
 
     // Subscribe to the error event
     conn.error(new ErrorCallback() {
-
       @Override
       public void onError(Throwable error) {
         error.printStackTrace();
       }
     });
 
-    // Subscribe to the connected event
     conn.connected(new Runnable() {
-
       @Override
       public void run() {
         System.out.println("CONNECTED");
@@ -63,7 +58,6 @@ public class Program {
 
     // Subscribe to the closed event
     conn.closed(new Runnable() {
-
       @Override
       public void run() {
         System.out.println("DISCONNECTED");
@@ -73,29 +67,28 @@ public class Program {
     // Start the connection
     conn.start()
       .done(new Action<Void>() {
-
         @Override
         public void run(Void obj) throws Exception {
           System.out.println("Done Connecting!");
         }
       });
-    
+
+    /*    
     // Subscribe to the received event
     conn.received(new MessageReceivedHandler() {
-
       @Override
       public void onMessageReceived(JsonElement json) {
         System.out.println("RAW received message: " + json.toString());
       }
     });
+    */
 
-    // Read lines and send them as messages.
+    System.out.println("Start typing to chat. 'exit' to quit.");
+
     Scanner inputReader = new Scanner(System.in);
-
     String line = inputReader.nextLine();
     while (!"exit".equals(line)) {
-      proxy.invoke("send", "Console", line).done(new Action<Void>() {
-
+      proxy.invoke("send", "Console:java", line).done(new Action<Void>() {
         @Override
         public void run(Void obj) throws Exception {
           System.out.println("SENT!");

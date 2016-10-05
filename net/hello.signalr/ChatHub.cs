@@ -5,13 +5,13 @@ using Microsoft.AspNet.SignalR;
 
 namespace hello.signalr
 {
-    public class ChatHub : Hub
+    public class ChatHub : Hub<IChat>, IChatHub
     {
         public void Send(string name, string message)
         {
             // ReSharper disable once ExplicitCallerInfoArgument
             LogInfo($"{nameof(Send)}({nameof(name)}:'{name}', {nameof(message)}:'{message}')");
-            Clients.All.broadcastMessage(name, message);
+            Clients.Others.BroadcastMessage(name, message);
         }
 
         public override Task OnConnected()
@@ -38,5 +38,4 @@ namespace hello.signalr
             if (!string.IsNullOrWhiteSpace(message)) Trace.TraceInformation(message);
         }
     }
-
 }
